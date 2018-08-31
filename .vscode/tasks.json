@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/BDSA2018.Lecture01.App/BDSA2018.Lecture01.App.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
