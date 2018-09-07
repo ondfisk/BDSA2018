@@ -48,7 +48,7 @@ namespace BDSA2018.Lecture02
             return Id;
         }
 
-        public static ICollection<Duck> Ducks = new[] {
+        public static List<Duck> Ducks = new List<Duck> {
             new Duck { Id = 1, Name = "Donald Duck", Age = 32 },
             new Duck { Id = 2, Name = "Daisy Duck", Age = 30 },
             new Duck { Id = 3, Name = "Huey Duck", Age = 10 },

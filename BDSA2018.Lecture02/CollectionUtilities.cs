@@ -5,9 +5,25 @@ namespace BDSA2018.Lecture02
 {
     public class CollectionUtilities
     {
-        public static IList<int> GetEven(IEnumerable<int> list)
+        public static IEnumerable<int> GetEven(IEnumerable<int> list)
         {
-            throw new NotImplementedException();
+            foreach (var item in list)
+            {
+                if (item == 42)
+                {
+                    continue;
+                }
+
+                if (item % 2 == 0)
+                {
+                    //if (item > 42)
+                    //{
+                    //    yield break;
+                    //}
+
+                    yield return item;
+                }
+            }
         }
 
         public static bool Find(int[] list, int number)
@@ -17,17 +33,17 @@ namespace BDSA2018.Lecture02
 
         public static ISet<int> Unique(IEnumerable<int> numbers)
         {
-            throw new NotImplementedException();
+            return new HashSet<int>(numbers);
         }
 
         public static IEnumerable<int> Reverse(IEnumerable<int> numbers)
         {
-            throw new NotImplementedException();
+            return new Stack<int>(numbers);
         }
 
         public static void Sort(List<Duck> ducks, IComparer<Duck> comparer = null)
         {
-            throw new NotImplementedException();
+            ducks.Sort(comparer);
         }
 
         public static IDictionary<int, Duck> ToDictionary(IEnumerable<Duck> ducks)
