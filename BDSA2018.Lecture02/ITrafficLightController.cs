@@ -1,4 +1,4 @@
-﻿namespace BDSA2018.Lecture02.Lib
+﻿namespace BDSA2018.Lecture02
 {
     public interface ITrafficLightController
     {
