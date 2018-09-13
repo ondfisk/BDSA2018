@@ -17,14 +17,25 @@ namespace BDSA2018.Lecture02.Tests
             Assert.Equal(expected, valid);
         }
 
-        [Fact]
-        public void TryParse_given_2000_Frederiksberg_C_returns_true()
+        [Theory]
+        [InlineData("2000 Frederiksberg C")]
+        [InlineData("100 Tórshavn")]
+        public void TryParse_given_postalCodeAndLocality_returns_true(string postalCodeAndLocality)
         {
-            var parsed = PostalCodeValidator.TryParse("2000 Frederiksberg C", out var postalCode, out var locality);
+            var parsed = PostalCodeValidator.TryParse(postalCodeAndLocality, out var _, out var _);
 
             Assert.True(parsed);
-            Assert.Equal("2000", postalCode);
-            Assert.Equal("Frederiksberg C", locality);
+        }
+
+        [Theory]
+        [InlineData("2000 Frederiksberg C", "2000", "Frederiksberg C")]
+        [InlineData("100 Tórshavn", "100", "Tórshavn")]
+        public void TryParse_given_postalCodeAndLocality_maps_postalCode_and_locality(string postalCodeAndLocality, string expectedPostalCode, string expectedLocality)
+        {
+            var parsed = PostalCodeValidator.TryParse(postalCodeAndLocality, out var postalCode, out var locality);
+
+            Assert.Equal(expectedPostalCode, postalCode);
+            Assert.Equal(expectedLocality, locality);
         }
     }
 }

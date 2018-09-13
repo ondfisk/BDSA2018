@@ -1,7 +1,8 @@
 ﻿using System;
 using Xunit;
+using static BDSA2018.Lecture03.TrafficLightColor;
 
-namespace BDSA2018.Lecture02.Tests
+namespace BDSA2018.Lecture03.Tests
 {
     public class TrafficLightControllerTests
     {
@@ -10,7 +11,7 @@ namespace BDSA2018.Lecture02.Tests
         {
             var controller = new TrafficLightController();
 
-            var go = controller.MayIGo("Green");
+            var go = controller.MayIGo(Green);
 
             Assert.True(go);
         }
@@ -20,7 +21,7 @@ namespace BDSA2018.Lecture02.Tests
         {
             var controller = new TrafficLightController();
 
-            var go = controller.MayIGo("yellow");
+            var go = controller.MayIGo(Yellow);
 
             Assert.False(go);
         }
@@ -30,25 +31,25 @@ namespace BDSA2018.Lecture02.Tests
         {
             var controller = new TrafficLightController();
 
-            var go = controller.MayIGo("RED");
+            var go = controller.MayIGo(Red);
 
             Assert.False(go);
         }
 
         [Fact]
-        public void CanIGo_given_Invalid_Color_throws_ArgumentException()
+        public void CanIGo_given_42_throws_ArgumentException()
         {
             var controller = new TrafficLightController();
 
-            Assert.Throws<ArgumentException>(() => controller.MayIGo("Invalid Color"));
+            Assert.Throws<ArgumentException>(() => controller.MayIGo((TrafficLightColor)42));
         }
 
         [Fact]
-        public void CanIGo_given_Invalid_Color_throws_with_message_Invalid_Color()
+        public void CanIGo_given_42_throws_with_message_Invalid_Color()
         {
             var controller = new TrafficLightController();
 
-            var exception = Assert.Throws<ArgumentException>(() => controller.MayIGo("Invalid Color"));
+            var exception = Assert.Throws<ArgumentException>(() => controller.MayIGo((TrafficLightColor)4));
 
             Assert.Equal("Invalid color", exception.Message);
         }
