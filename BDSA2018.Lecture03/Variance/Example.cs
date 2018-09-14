@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BDSA2018.Lecture02.Variance
+namespace BDSA2018.Lecture03.Variance
 {
     public class Example
     {
