@@ -11,7 +11,6 @@ namespace BDSA2018.Lecture03
                 case TrafficLightColor.Green:
                     return true;
                 case TrafficLightColor.Yellow:
-                    return false;
                 case TrafficLightColor.Red:
                     return false;
                 default:

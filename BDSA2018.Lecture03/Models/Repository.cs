@@ -11,7 +11,7 @@ namespace BDSA2018.Lecture03.Models
 
         public Repository()
         {
-            Cities = new HashSet<City>()
+            Cities = new HashSet<City>
             {
                 new City { Id = 1, Name = "New York" },
                 new City { Id = 2, Name = "Metropolis" },
