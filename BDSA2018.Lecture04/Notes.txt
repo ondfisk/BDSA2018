@@ -1,0 +1,60 @@
+Install-Package System.Data.SqlClient
+
+SELECT 
+    a.[Name] AS Actor
+   ,c.[Name] AS Character
+FROM
+    Characters AS c
+    LEFT JOIN Actors AS a ON c.ActorId = a.Id
+
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+
+Install-Package Microsoft.EntityFrameworkCore.Tools
+Install-Package Microsoft.EntityFrameworkCore.Design
+
+Scaffold-DbContext -Connection "Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true" -Provider Microsoft.EntityFrameworkCore.SqlServer #-DataAnnotations 
+
+var optionsBuilder = new DbContextOptionsBuilder<FuturamaContext>();
+options.UseSqlServer("Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
+var context = new FuturamaContext(options.Options);
+
+
+    public class FuturamaContext : DbContext
+    {
+        public FuturamaContext(DbContextOptions<FuturamaContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Character> Characters { get; set; }
+    }
+
+
+	    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Actor>().HasData(
+                new Actor { Id = 1, Name = "Billy West" },
+                new Actor { Id = 2, Name = "Katey Sagal" },
+                new Actor { Id = 3, Name = "John DiMaggio" },
+                new Actor { Id = 4, Name = "Lauren Tom" },
+                new Actor { Id = 5, Name = "Phil LaMarr" }
+            );
+
+            modelBuilder.Entity<Character>().HasData(
+                new Character { Id = 1, ActorId = 1, Name = "Philip J. Fry", Species = "Human", Planet = "Earth" },
+                new Character { Id = 2, ActorId = 2, Name = "Leela Turanga", Species = "Mutant, Human", Planet = "Earth" },
+                new Character { Id = 3, ActorId = 3, Name = "Bender Bending Rodrique", Species = "Robot", Planet = "Earth" },
+                new Character { Id = 4, ActorId = 1, Name = "John A. Zoidberg", Species = "Decapodian", Planet = "Decapod 10" },
+                new Character { Id = 5, ActorId = 4, Name = "Amy Wong", Species = "Human", Planet = "Mars" },
+                new Character { Id = 6, ActorId = 5, Name = "Hermes Conrad", Species = "Human", Planet = "Earth" },
+                new Character { Id = 7, ActorId = 1, Name = "Hubert J. Farnsworth", Species = "Human", Planet = "Earth" }
+            );
+        }
