@@ -15,8 +15,8 @@ Install-Package Microsoft.EntityFrameworkCore.Design
 Scaffold-DbContext -Connection "Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true" -Provider Microsoft.EntityFrameworkCore.SqlServer #-DataAnnotations 
 
 var optionsBuilder = new DbContextOptionsBuilder<FuturamaContext>();
-options.UseSqlServer("Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
-var context = new FuturamaContext(options.Options);
+optionsBuilder.UseSqlServer("Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
+var context = new FuturamaContext(optionsBuilder.Options);
 
 
     public class FuturamaContext : DbContext
@@ -33,7 +33,6 @@ var context = new FuturamaContext(options.Options);
 	    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
-
 
             base.OnConfiguring(optionsBuilder);
         }
