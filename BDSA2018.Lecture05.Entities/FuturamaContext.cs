@@ -2,7 +2,7 @@
 
 namespace BDSA2018.Lecture05.Entities
 {
-    public class FuturamaContext : DbContext
+    public class FuturamaContext : DbContext, IFuturamaContext
     {
         public virtual DbSet<Actor> Actors { get; set; }
         public virtual DbSet<Character> Characters { get; set; }
@@ -18,15 +18,15 @@ namespace BDSA2018.Lecture05.Entities
         {
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 
-        //        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
-        //    }
-        //}
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
 ﻿using BDSA2018.Lecture05.Entities;
+using BDSA2018.Lecture05.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,9 @@ namespace BDSA2018.Lecture05.App
             IServiceCollection services = new ServiceCollection();
 
             services.AddDbContext<FuturamaContext>(
-                options => options.UseSqlServer(settings.ConnectionString));
+                options => options.UseSqlServer(settings.ConnectionString))
+                .AddTransient<IFuturamaContext, FuturamaContext>()
+                .AddTransient<ICharacterRepository, CharacterRepository>();
 
             return services.BuildServiceProvider();
         }
