@@ -1,3 +1,5 @@
+using BDSA2018.Lecture05.Entities;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace BDSA2018.Lecture05.Tests

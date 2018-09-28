@@ -1,0 +1,5 @@
+New-Guid
+
+Add <UserSecretsId>guid</UserSecretsId> to .csproj
+
+dotnet user-secrets set ConnectionString "Server=(localdb)\\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;MultipleActiveResultSets=true" --project BDSA2018.Lecture05.App --id guid

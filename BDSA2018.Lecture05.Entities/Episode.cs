@@ -6,6 +6,11 @@ namespace BDSA2018.Lecture05.Entities
 {
     public class Episode
     {
+        public Episode()
+        {
+            Characters = new HashSet<EpisodeCharacter>();
+        }
+
         public int Id { get; set; }
 
         [Required]
