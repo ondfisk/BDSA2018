@@ -153,11 +153,11 @@ namespace BDSA2018.Lecture06
                     }
                     Console.WriteLine($"t1 lock released on account {accounts[1].Name}");
                 }
-                Console.WriteLine($"t1 lock released on account {accounts[1].Name}");
+                Console.WriteLine($"t1 lock released on account {accounts[0].Name}");
             });
             var t2 = new Thread(() =>
             {
-                var accounts = new[] { a, b }.OrderBy(c => c.Name).ToArray();
+                var accounts = new[] { b, a }.OrderBy(c => c.Name).ToArray();
 
                 Console.WriteLine($"t2 acquiring lock on account {b.Name}");
                 lock (accounts[0])
@@ -174,7 +174,7 @@ namespace BDSA2018.Lecture06
                     }
                     Console.WriteLine($"t2 lock released on account {accounts[1].Name}");
                 }
-                Console.WriteLine($"t2 lock released on account {accounts[1].Name}");
+                Console.WriteLine($"t2 lock released on account {accounts[0].Name}");
             });
 
             t1.Start();

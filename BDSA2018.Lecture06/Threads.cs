@@ -51,7 +51,7 @@ namespace BDSA2018.Lecture06
             var t = new Thread(WriteX);
             t.Start();
 
-            for (var i = 0; i < 40; i++)
+            for (var i = 0; i < 400; i++)
             {
                 Console.Write('Y');
             }
@@ -59,7 +59,7 @@ namespace BDSA2018.Lecture06
 
         private static void WriteX()
         {
-            for (var i = 0; i < 40; i++)
+            for (var i = 0; i < 400; i++)
             {
                 Console.Write('X');
             }

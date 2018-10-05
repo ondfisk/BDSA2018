@@ -6,7 +6,7 @@ namespace BDSA2018.Lecture06
     {
         static void Main(string[] args)
         {
-            Threads.SpawnThread();
+            //Threads.SpawnThread();
             //Threads.SpawnMultipleThreads(1000);
             //Threads.Overlapping();
             //Threads.OverlappingWithArguments();

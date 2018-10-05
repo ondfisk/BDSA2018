@@ -13,7 +13,10 @@ namespace BDSA2018.Lecture06
             for (var i = 0; i < count; i++)
             {
                 Task.Delay(20).Wait();
-                sb.AppendFormat("{0}: {1}\r\n", name, i);
+                lock (sb)
+                {
+                    sb.AppendFormat("{0}: {1}\r\n", name, i);
+                }
             }
         }
 
@@ -75,8 +78,8 @@ namespace BDSA2018.Lecture06
 
             var t = Task.Run(() =>
             {
-                Task.Factory.StartNew(() => Race(sb, "One", 50), TaskCreationOptions.AttachedToParent);
-                Task.Factory.StartNew(() => Race(sb, "Two", 50), TaskCreationOptions.AttachedToParent);
+                Task.Factory.StartNew(() => Race(sb, "One", 50), TaskCreationOptions.AttachedToParent).Wait();
+                Task.Factory.StartNew(() => Race(sb, "Two", 50), TaskCreationOptions.AttachedToParent).Wait();
             });
             t.Wait();
 
