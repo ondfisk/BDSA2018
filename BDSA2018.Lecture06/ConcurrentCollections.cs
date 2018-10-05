@@ -11,7 +11,7 @@ namespace BDSA2018.Lecture06
         {
             for (var i = 0; i < count; i++)
             {
-                queue.Enqueue(string.Format("{0}: {1}", name, i));
+                queue.Enqueue($"{name}: {i}");
             }
         }
 

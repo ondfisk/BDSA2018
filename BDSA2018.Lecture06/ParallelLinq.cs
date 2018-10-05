@@ -10,13 +10,12 @@ namespace BDSA2018.Lecture06
         {
             var numbers = Enumerable.Range(1, 5000000);
 
-            var query = from n in numbers.AsParallel().AsOrdered()
+            var query = from n in numbers
                         where Enumerable.Range(2, (int) Math.Sqrt(n)).All(i => n%i > 0)
                         select n;
 
-            TimeSpan time;
 
-            var primes = Time(query.ToArray, out time);
+            var primes = Time(query.ToArray, out TimeSpan time);
 
             Console.WriteLine("Primes: {0}, first: {1}, last: {2}", time, primes.First(), primes.Last());
         }
