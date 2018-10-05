@@ -3,8 +3,6 @@ using BDSA2018.Lecture05.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Xunit;
@@ -32,28 +30,33 @@ namespace BDSA2018.Lecture05.Tests
         {
             var builder = new DbContextOptionsBuilder<FuturamaContext>()
                     .UseInMemoryDatabase(databaseName: nameof(Find_given_id_exists_returns_dto));
-            var context = new FuturamaContext(builder.Options);
+            var options = builder.Options;
 
-            var entity = new Character
+            using (var context = new FuturamaContext(options))
             {
-                Name = "Fry",
-                Species = "Human",
-                Planet = "Earth",
-                Actor = new Actor { Name = "Billy West" }
-            };
-            context.Characters.Add(entity);
-            context.SaveChanges();
+                var entity = new Character
+                {
+                    Name = "Fry",
+                    Species = "Human",
+                    Planet = "Earth",
+                    Actor = new Actor { Name = "Billy West" }
+                };
+                context.Characters.Add(entity);
+                context.SaveChanges();
+            }
+            using (var context = new FuturamaContext(options))
+            {
+                var repository = new CharacterRepository(context);
 
-            var repository = new CharacterRepository(context);
+                var character = repository.Find(1);
 
-            var character = repository.Find(1);
-
-            Assert.Equal(1, character.Id);
-            Assert.Equal("Fry", character.Name);
-            Assert.Equal("Human", character.Species);
-            Assert.Equal("Earth", character.Planet);
-            Assert.Equal(1, character.ActorId);
-            Assert.Equal("Billy West", character.ActorName);
+                Assert.Equal(1, character.Id);
+                Assert.Equal("Fry", character.Name);
+                Assert.Equal("Human", character.Species);
+                Assert.Equal("Earth", character.Planet);
+                Assert.Equal(1, character.ActorId);
+                Assert.Equal("Billy West", character.ActorName);
+            }
         }
 
         [Fact]
@@ -61,28 +64,38 @@ namespace BDSA2018.Lecture05.Tests
         {
             var builder = new DbContextOptionsBuilder<FuturamaContext>()
                     .UseInMemoryDatabase(databaseName: nameof(Find_given_id_exists_returns_dto_with_episodeCount));
-            var context = new FuturamaContext(builder.Options);
+            var options = builder.Options;
 
-            var episode1 = new Episode { Title = "Space Pilot 3000" };
-            var episode2 = new Episode { Title = "The Series Has Landed" };
-            context.Episodes.AddRange(episode1, episode2);
+            int id;
 
-            var entity = new Character
+            using (var context = new FuturamaContext(options))
             {
-                EpisodeCharacters = new[] 
+                var episode1 = new Episode { Title = "Space Pilot 3000" };
+                var episode2 = new Episode { Title = "The Series Has Landed" };
+
+                var character = new Character
                 {
-                    new EpisodeCharacter { Episode = episode1 },
-                    new EpisodeCharacter { Episode = episode2 }
-                }
-            };
-            context.Characters.Add(entity);
-            context.SaveChanges();
+                    EpisodeCharacters = new[]
+                    {
+                        new EpisodeCharacter { Episode = episode1 },
+                        new EpisodeCharacter { Episode = episode2 }
+                    }
+                };
 
-            var repository = new CharacterRepository(context);
+                context.Characters.Add(character);
+                context.SaveChanges();
 
-            var character = repository.Find(1);
+                id = character.Id;
+            }
 
-            Assert.Equal(2, character.NumberOfEpisodes);
+            using (var context = new FuturamaContext(options))
+            {
+                var repository = new CharacterRepository(context);
+
+                var dto = repository.Find(id);
+
+                Assert.Equal(2, dto.NumberOfEpisodes);
+            }
         }
 
         [Fact]
