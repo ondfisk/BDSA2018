@@ -6,6 +6,7 @@ using Moq;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BDSA2018.Lecture06.Tests
@@ -13,13 +14,13 @@ namespace BDSA2018.Lecture06.Tests
     public class CharacterRepositoryTests
     {
         [Fact]
-        public void Create_given_dto_creates_new_Character()
+        public async Task Create_given_dto_creates_new_Character()
         {
             using (var connection = CreateConnection())
             using (var context = CreateContext(connection))
             {
                 context.Actors.Add(new Actor { Name = "John DiMaggio" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 var repository = new CharacterRepository(context);
                 var dto = new CharacterCreateUpdateDTO
@@ -30,7 +31,7 @@ namespace BDSA2018.Lecture06.Tests
                     Planet = "Earth"
                 };
 
-                var id = repository.Create(dto);
+                var id = await repository.CreateAsync(dto);
 
                 Assert.Equal(1, id);
 
@@ -44,7 +45,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public void Find_given_id_exists_returns_dto()
+        public async Task Find_given_id_exists_returns_dto()
         {
             using (var connection = CreateConnection())
             using (var context = CreateContext(connection))
@@ -62,11 +63,11 @@ namespace BDSA2018.Lecture06.Tests
                     }
                 };
                 context.Characters.Add(entity);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 var repository = new CharacterRepository(context);
 
-                var character = repository.Find(1);
+                var character = await repository.FindAsync(1);
 
                 Assert.Equal(1, character.Id);
                 Assert.Equal("Fry", character.Name);
@@ -79,7 +80,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public void Read_returns_projection_of_all_characters()
+        public async Task Read_returns_projection_of_all_characters()
         {
             using (var connection = CreateConnection())
             using (var context = CreateContext(connection))
@@ -101,7 +102,7 @@ namespace BDSA2018.Lecture06.Tests
                     }
                 };
                 context.Characters.Add(entity);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 var repository = new CharacterRepository(context);
 
@@ -120,13 +121,13 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public void Update_given_non_existing_dto_returns_false()
+        public async Task Update_given_non_existing_dto_returns_false()
         {
             using (var connection = CreateConnection())
             using (var context = CreateContext(connection))
             {
                 context.Actors.Add(new Actor { Name = "John DiMaggio" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 var repository = new CharacterRepository(context);
                 var dto = new CharacterCreateUpdateDTO
@@ -138,23 +139,23 @@ namespace BDSA2018.Lecture06.Tests
                     Planet = "Earth"
                 };
 
-                var updated = repository.Update(dto);
+                var updated = await repository.UpdateAsync(dto);
 
                 Assert.False(updated);
             }
         }
 
         [Fact]
-        public void Update_given_existing_dto_updates_entity()
+        public async Task Update_given_existing_dto_updates_entity()
         {
             using (var connection = CreateConnection())
             using (var context = CreateContext(connection))
             {
                 context.Actors.Add(new Actor { Name = "John DiMaggio" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 context.Characters.Add(new Character { Name = "Fry", Species = "Human" });
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 var repository = new CharacterRepository(context);
                 var dto = new CharacterCreateUpdateDTO
@@ -166,7 +167,7 @@ namespace BDSA2018.Lecture06.Tests
                     Planet = "Earth"
                 };
 
-                var updated = repository.Update(dto);
+                var updated = await repository.UpdateAsync(dto);
 
                 Assert.True(updated);
 
@@ -180,56 +181,56 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public void Delete_given_id_not_exists_return_false()
+        public async Task Delete_given_id_not_exists_return_false()
         {
             var mock = new Mock<IFuturamaContext>();
             mock.Setup(s => s.Characters.Find(42)).Returns(default(Character));
 
             var repository = new CharacterRepository(mock.Object);
 
-            var deleted = repository.Delete(42);
+            var deleted = await repository.DeleteAsync(42);
 
             Assert.False(deleted);
         }
 
         [Fact]
-        public void Delete_given_id_exists_character_is_removed_from_context()
+        public async Task Delete_given_id_exists_character_is_removed_from_context()
         {
             var entity = new Character();
             var mock = new Mock<IFuturamaContext>();
-            mock.Setup(s => s.Characters.Find(42)).Returns(entity);
+            mock.Setup(s => s.Characters.FindAsync(42)).ReturnsAsync(entity);
 
             var repository = new CharacterRepository(mock.Object);
 
-            repository.Delete(42);
+            await repository.DeleteAsync(42);
 
             mock.Verify(s => s.Characters.Remove(entity));
         }
 
         [Fact]
-        public void Delete_given_id_exists_context_SaveChanges()
+        public async Task Delete_given_id_exists_context_SaveChanges()
         {
             var entity = new Character();
             var mock = new Mock<IFuturamaContext>();
-            mock.Setup(s => s.Characters.Find(42)).Returns(entity);
+            mock.Setup(s => s.Characters.FindAsync(42)).ReturnsAsync(entity);
 
             var repository = new CharacterRepository(mock.Object);
 
-            repository.Delete(42);
+            await repository.DeleteAsync(42);
 
-            mock.Verify(s => s.SaveChanges());
+            mock.Verify(s => s.SaveChangesAsync(default));
         }
 
         [Fact]
-        public void Delete_given_id_exists_return_true()
+        public async Task Delete_given_id_exists_return_true()
         {
             var entity = new Character();
             var mock = new Mock<IFuturamaContext>();
-            mock.Setup(s => s.Characters.Find(42)).Returns(entity);
+            mock.Setup(s => s.Characters.FindAsync(42)).ReturnsAsync(entity);
 
             var repository = new CharacterRepository(mock.Object);
 
-            var deleted = repository.Delete(42);
+            var deleted = await repository.DeleteAsync(42);
 
             Assert.True(deleted);
         }

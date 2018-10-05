@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BDSA2018.Lecture06.Models
 {
     public interface ICharacterRepository
     {
-        int Create(CharacterCreateUpdateDTO character);
+        Task<int> CreateAsync(CharacterCreateUpdateDTO character);
 
-        CharacterDTO Find(int characterId);
+        Task<CharacterDTO> FindAsync(int characterId);
 
-        IReadOnlyCollection<CharacterDTO> Read();
+        IQueryable<CharacterDTO> Read();
 
-        bool Update(CharacterCreateUpdateDTO character);
+        Task<bool> UpdateAsync(CharacterCreateUpdateDTO character);
 
-        bool Delete(int characterId);
+        Task<bool> DeleteAsync(int characterId);
     }
 }

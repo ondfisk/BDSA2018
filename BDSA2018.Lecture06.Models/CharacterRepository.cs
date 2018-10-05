@@ -1,6 +1,8 @@
 ﻿using BDSA2018.Lecture06.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BDSA2018.Lecture06.Models
 {
@@ -13,7 +15,7 @@ namespace BDSA2018.Lecture06.Models
             _context = context;
         }
 
-        public int Create(CharacterCreateUpdateDTO character)
+        public async Task<int> CreateAsync(CharacterCreateUpdateDTO character)
         {
             var entity = new Character
             {
@@ -24,12 +26,12 @@ namespace BDSA2018.Lecture06.Models
             };
 
             _context.Characters.Add(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return entity.Id;
         }
 
-        public CharacterDTO Find(int characterId)
+        public async Task<CharacterDTO> FindAsync(int characterId)
         {
             var entities = from c in _context.Characters
                            where c.Id == characterId
@@ -44,10 +46,10 @@ namespace BDSA2018.Lecture06.Models
                                NumberOfEpisodes = c.EpisodeCharacters.Count()
                            };
 
-            return entities.FirstOrDefault();
+            return await entities.FirstOrDefaultAsync();
         }
 
-        public IReadOnlyCollection<CharacterDTO> Read()
+        public IQueryable<CharacterDTO> Read()
         {
             var entities = from c in _context.Characters
                            select new CharacterDTO
@@ -61,12 +63,12 @@ namespace BDSA2018.Lecture06.Models
                                NumberOfEpisodes = c.EpisodeCharacters.Count()
                            };
 
-            return entities.ToList().AsReadOnly();
+            return entities;
         }
 
-        public bool Update(CharacterCreateUpdateDTO character)
+        public async Task<bool> UpdateAsync(CharacterCreateUpdateDTO character)
         {
-            var entity = _context.Characters.Find(character.Id);
+            var entity = await _context.Characters.FindAsync(character.Id);
 
             if (entity == null)
             {
@@ -78,14 +80,14 @@ namespace BDSA2018.Lecture06.Models
             entity.Species = character.Species;
             entity.Planet = character.Planet;
            
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public bool Delete(int characterId)
+        public async Task<bool> DeleteAsync(int characterId)
         {
-            var entity = _context.Characters.Find(characterId);
+            var entity = await _context.Characters.FindAsync(characterId);
 
             if (entity == null)
             {
@@ -94,7 +96,7 @@ namespace BDSA2018.Lecture06.Models
 
             _context.Characters.Remove(entity);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }

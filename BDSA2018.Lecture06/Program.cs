@@ -36,7 +36,7 @@ namespace BDSA2018.Lecture06
 
             //ParallelLinq.Run();
 
-            //ConcurrentCollections.Race();
+            ConcurrentCollections.Race();
 
             Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey();

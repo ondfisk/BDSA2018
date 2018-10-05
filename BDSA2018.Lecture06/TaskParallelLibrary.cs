@@ -10,30 +10,35 @@ namespace BDSA2018.Lecture06
     {
         public static void For()
         {
-            for (int i = 0; i < 1000; i++)
+            Parallel.For(0, 999, i =>
             {
                 Console.WriteLine(i);
-            }
+            });
         }
 
         public static void ForEach()
         {
             var numbers = Enumerable.Range(0, 1000);
 
-            foreach (var number in numbers)
+            Parallel.ForEach(numbers, number =>
             {
                 Console.WriteLine(number);
-            }
+            });
         }
 
         public static void Invoke()
         {
             var sw = Stopwatch.StartNew();
 
-            SuperLongRunningThingy1();
-            SuperLongRunningThingy2();
-            SuperLongRunningThingy3();
-            SuperLongRunningThingy4();
+            Parallel.Invoke(
+                SuperLongRunningThingy1,
+                SuperLongRunningThingy2,
+                SuperLongRunningThingy3,
+                SuperLongRunningThingy1,
+                SuperLongRunningThingy2,
+                SuperLongRunningThingy3,
+                SuperLongRunningThingy4
+            );
 
             sw.Stop();
 
