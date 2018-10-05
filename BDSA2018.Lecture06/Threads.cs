@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace BDSA2018.Lecture06.Demos
+namespace BDSA2018.Lecture06
 {
     public class Threads
     {
@@ -10,7 +10,12 @@ namespace BDSA2018.Lecture06.Demos
         /// </summary>
         public static void SpawnThread()
         {
-            Console.WriteLine("Hello Threads");
+            var thread = new Thread(() =>
+            {
+                Console.WriteLine("I'm a thread");
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            });
+            thread.Start();
         }
 
         /// <summary>
@@ -20,7 +25,7 @@ namespace BDSA2018.Lecture06.Demos
         public static void SpawnMultipleThreads(int numberOfThreads)
         {
             Console.WriteLine("Hello Threads");
-            Console.WriteLine("Press any key to continue . . .");
+            Console.WriteLine($"Press any key to continue spawn {numberOfThreads} threads");
             Console.ReadKey();
 
             var t = new Thread[numberOfThreads];

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BDSA2018.Lecture06.Demos
+namespace BDSA2018.Lecture06
 {
     public class ConcurrentCollections
     {

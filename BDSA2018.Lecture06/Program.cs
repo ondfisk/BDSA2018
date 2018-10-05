@@ -6,36 +6,37 @@ namespace BDSA2018.Lecture06
     {
         static void Main(string[] args)
         {
-            Demos.Threads.SpawnThread();
-            //Demos.Threads.SpawnMultipleThreads(1000);
-            //Demos.Threads.Overlapping();
-            //Demos.Threads.OverlappingWithArguments();
-            //Demos.Threads.Join();
+            Threads.SpawnThread();
+            //Threads.SpawnMultipleThreads(1000);
+            //Threads.Overlapping();
+            //Threads.OverlappingWithArguments();
+            //Threads.Join();
 
-            //Demos.RaceCondition.Race();
-            //Demos.FixedRace.Race();
-            //Demos.BehindTheScenes.Race();
+            //RaceCondition.Race();
+            //FixedRace.Race();
+            //BehindTheScenes.Race();
 
-            //Demos.Deadlock.Run();
-            //Demos.Deadlock.RunWithComments();
+            //Deadlock.Run();
+            //Deadlock.RunWithComments();
+            //Deadlock.RunWithCommentsAndOrder();
 
-            //Demos.Tasks.TaskFactory();
-            //Demos.Tasks.Wait();
-            //Demos.Tasks.WaitAll();
-            //Demos.Tasks.Attached();
-            //Demos.Tasks.Continuation();
-            //Demos.Tasks.Result();
-            //Demos.Tasks.Cancellation();
-            //Demos.Tasks.ResultCancelled();
-            //Demos.Tasks.Fail();
+            //Tasks.TaskFactory();
+            //Tasks.Wait();
+            //Tasks.WaitAll();
+            //Tasks.Attached();
+            //Tasks.Continuation();
+            //Tasks.Result();
+            //Tasks.Cancellation();
+            //Tasks.ResultCancelled();
+            //Tasks.Fail();
 
-            //Demos.TaskParallelLibrary.For();
-            //Demos.TaskParallelLibrary.ForEach();
-            //Demos.TaskParallelLibrary.Invoke();
+            //TaskParallelLibrary.For();
+            //TaskParallelLibrary.ForEach();
+            //TaskParallelLibrary.Invoke();
 
-            //Demos.ParallelLinq.Run();
+            //ParallelLinq.Run();
 
-            //Demos.ConcurrentCollections.Race();
+            //ConcurrentCollections.Race();
 
             Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey();

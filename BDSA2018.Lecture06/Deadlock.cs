@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 
-namespace BDSA2018.Lecture06.Demos
+namespace BDSA2018.Lecture06
 {
     public class Account
     {
@@ -82,39 +83,41 @@ namespace BDSA2018.Lecture06.Demos
 
             var t1 = new Thread(() =>
             {
-                Console.WriteLine("t1 aquiring lock on account {0}", a.Name);
+                Console.WriteLine($"t1 acquiring lock on account {a.Name}");
                 lock (a)
                 {
                     Thread.Sleep(500);
-                    Console.WriteLine("t1 lock aquired on account {0}", a.Name);
-                    Console.WriteLine("t1 aquiring lock on account {0}", b.Name);
+                    Console.WriteLine($"t1 lock acquired on account {a.Name}");
+                    Console.WriteLine($"t1 acquiring lock on account {b.Name}");
                     lock (b)
                     {
                         Thread.Sleep(500);
-                        Console.WriteLine("t1 lock aquired on account {0}", b.Name);
+                        Console.WriteLine($"t1 lock acquired on account {b.Name}");
                         bank.Transfer(a, b, 100.0m);
+                        Console.WriteLine("transfered 100.00 from a to b");
                     }
-                    Console.WriteLine("t1 lock released on account {0}", b.Name);
+                    Console.WriteLine($"t1 lock released on account {b.Name}");
                 }
-                Console.WriteLine("t1 lock released on account {0}", a.Name);
+                Console.WriteLine($"t1 lock released on account {a.Name}");
             });
             var t2 = new Thread(() =>
             {
-                Console.WriteLine("t2 aquiring lock on account {0}", b.Name);
+                Console.WriteLine($"t2 acquiring lock on account {b.Name}");
                 lock (b)
                 {
                     Thread.Sleep(500);
-                    Console.WriteLine("t2 lock aquired on account {0}", b.Name);
-                    Console.WriteLine("t2 aquiring lock on account {0}", a.Name);
+                    Console.WriteLine($"t2 lock acquired on account {b.Name}");
+                    Console.WriteLine($"t2 acquiring lock on account {a.Name}");
                     lock (a)
                     {
                         Thread.Sleep(500);
-                        Console.WriteLine("t2 lock aquired on account {0}", a.Name);
-                        bank.Transfer(a, b, 100.0m);
+                        Console.WriteLine($"t2 lock acquired on account {a.Name}");
+                        bank.Transfer(b, a, 100.0m);
+                        Console.WriteLine("transfered 100.00 from b to a");
                     }
-                    Console.WriteLine("t2 lock released on account {0}", a.Name);
+                    Console.WriteLine($"t2 lock released on account {a.Name}");
                 }
-                Console.WriteLine("t2 lock released on account {0}", a.Name);
+                Console.WriteLine($"t2 lock released on account {a.Name}");
             });
 
             t1.Start();
@@ -122,7 +125,64 @@ namespace BDSA2018.Lecture06.Demos
             t1.Join();
             t2.Join();
 
-            Console.WriteLine("Program terminated");
+            Console.WriteLine($"Program terminated");
+        }
+
+        public static void RunWithCommentsAndOrder()
+        {
+            var bank = new Bank();
+            var a = new Account("a", 100.0m);
+            var b = new Account("b", 500.0m);
+
+            var t1 = new Thread(() =>
+            {
+                var accounts = new[] { a, b }.OrderBy(c => c.Name).ToArray();
+
+                Console.WriteLine($"t1 acquiring lock on account {accounts[1].Name}");
+                lock (accounts[0])
+                {
+                    Thread.Sleep(500);
+                    Console.WriteLine($"t1 lock acquired on account {accounts[0].Name}");
+                    Console.WriteLine($"t1 acquiring lock on account {accounts[1].Name}");
+                    lock (accounts[1])
+                    {
+                        Thread.Sleep(500);
+                        Console.WriteLine($"t1 lock acquired on account {accounts[1].Name}");
+                        bank.Transfer(a, b, 100.0m);
+                        Console.WriteLine("transfered 100.00 from a to b");
+                    }
+                    Console.WriteLine($"t1 lock released on account {accounts[1].Name}");
+                }
+                Console.WriteLine($"t1 lock released on account {accounts[1].Name}");
+            });
+            var t2 = new Thread(() =>
+            {
+                var accounts = new[] { a, b }.OrderBy(c => c.Name).ToArray();
+
+                Console.WriteLine($"t2 acquiring lock on account {b.Name}");
+                lock (accounts[0])
+                {
+                    Thread.Sleep(500);
+                    Console.WriteLine($"t2 lock acquired on account {accounts[1].Name}");
+                    Console.WriteLine($"t2 acquiring lock on account {accounts[1].Name}");
+                    lock (accounts[1])
+                    {
+                        Thread.Sleep(500);
+                        Console.WriteLine($"t2 lock acquired on account {accounts[1].Name}");
+                        bank.Transfer(b, a, 100.0m);
+                        Console.WriteLine("transfered 100.00 from b to a");
+                    }
+                    Console.WriteLine($"t2 lock released on account {accounts[1].Name}");
+                }
+                Console.WriteLine($"t2 lock released on account {accounts[1].Name}");
+            });
+
+            t1.Start();
+            t2.Start();
+            t1.Join();
+            t2.Join();
+
+            Console.WriteLine($"Program terminated");
         }
     }
 }

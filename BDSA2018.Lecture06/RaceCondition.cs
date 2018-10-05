@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading;
 
-namespace BDSA2018.Lecture06.Demos
+namespace BDSA2018.Lecture06
 {
     public class RaceCondition
     {

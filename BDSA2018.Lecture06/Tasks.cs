@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BDSA2018.Lecture06.Demos
+namespace BDSA2018.Lecture06
 {
     public class Tasks
     {

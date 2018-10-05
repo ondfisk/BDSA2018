@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 
-namespace BDSA2018.Lecture06.Demos
+namespace BDSA2018.Lecture06
 {
     public class ParallelLinq
     {
