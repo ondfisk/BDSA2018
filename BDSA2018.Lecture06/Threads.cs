@@ -14,6 +14,7 @@ namespace BDSA2018.Lecture06
             {
                 Console.WriteLine("I'm a thread");
                 Thread.Sleep(TimeSpan.FromSeconds(5));
+                Console.WriteLine("Thread done");
             });
             thread.Start();
         }
@@ -28,14 +29,18 @@ namespace BDSA2018.Lecture06
             Console.WriteLine($"Press any key to continue spawn {numberOfThreads} threads");
             Console.ReadKey();
 
+            var random = new Random();
+
             var t = new Thread[numberOfThreads];
             for (var i = 0; i < t.Length; i++)
             {
                 var n = i + 1;
+                var duration = random.Next(10) + 5;
                 t[i] = new Thread(() =>
                 {
                     Console.WriteLine("I'm thread no. {0}", n);
-                    Thread.Sleep(TimeSpan.FromSeconds(20));
+                    Thread.Sleep(TimeSpan.FromSeconds(duration));
+                    Console.WriteLine("Thread no. {0} completed", n);
                 });
                 t[i].Start();
             }
