@@ -16,8 +16,8 @@ namespace BDSA2018.Lecture06.Tests
         [Fact]
         public async Task Create_given_dto_creates_new_Character()
         {
-            using (var connection = CreateConnection())
-            using (var context = CreateContext(connection))
+            using (var connection = await CreateConnectionAsync())
+            using (var context = await CreateContextAsync(connection))
             {
                 context.Actors.Add(new Actor { Name = "John DiMaggio" });
                 await context.SaveChangesAsync();
@@ -47,8 +47,8 @@ namespace BDSA2018.Lecture06.Tests
         [Fact]
         public async Task Find_given_id_exists_returns_dto()
         {
-            using (var connection = CreateConnection())
-            using (var context = CreateContext(connection))
+            using (var connection = await CreateConnectionAsync())
+            using (var context = await CreateContextAsync(connection))
             {
                 var entity = new Character
                 {
@@ -82,8 +82,8 @@ namespace BDSA2018.Lecture06.Tests
         [Fact]
         public async Task Read_returns_projection_of_all_characters()
         {
-            using (var connection = CreateConnection())
-            using (var context = CreateContext(connection))
+            using (var connection = await CreateConnectionAsync())
+            using (var context = await CreateContextAsync(connection))
             {
                 var episode1 = new Episode { Title = "Space Pilot 3000" };
                 var episode2 = new Episode { Title = "The Series Has Landed" };
@@ -123,8 +123,8 @@ namespace BDSA2018.Lecture06.Tests
         [Fact]
         public async Task Update_given_non_existing_dto_returns_false()
         {
-            using (var connection = CreateConnection())
-            using (var context = CreateContext(connection))
+            using (var connection = await CreateConnectionAsync())
+            using (var context = await CreateContextAsync(connection))
             {
                 context.Actors.Add(new Actor { Name = "John DiMaggio" });
                 await context.SaveChangesAsync();
@@ -148,8 +148,8 @@ namespace BDSA2018.Lecture06.Tests
         [Fact]
         public async Task Update_given_existing_dto_updates_entity()
         {
-            using (var connection = CreateConnection())
-            using (var context = CreateContext(connection))
+            using (var connection = await CreateConnectionAsync())
+            using (var context = await CreateContextAsync(connection))
             {
                 context.Actors.Add(new Actor { Name = "John DiMaggio" });
                 await context.SaveChangesAsync();
@@ -235,21 +235,21 @@ namespace BDSA2018.Lecture06.Tests
             Assert.True(deleted);
         }
 
-        private DbConnection CreateConnection()
+        private async Task<DbConnection> CreateConnectionAsync()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
+            await connection.OpenAsync();
 
             return connection;
         }
 
-        private IFuturamaContext CreateContext(DbConnection connection)
+        private async Task<IFuturamaContext> CreateContextAsync(DbConnection connection)
         {
             var builder = new DbContextOptionsBuilder<FuturamaContext>()
-                  .UseSqlite(connection);
+                              .UseSqlite(connection);
 
             var context = new FuturamaContext(builder.Options);
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             return context;
         }

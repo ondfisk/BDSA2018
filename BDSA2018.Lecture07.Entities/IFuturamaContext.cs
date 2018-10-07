@@ -11,6 +11,6 @@ namespace BDSA2018.Lecture07.Entities
         DbSet<Character> Characters { get; set; }
         DbSet<EpisodeCharacter> EpisodeCharacters { get; set; }
         DbSet<Episode> Episodes { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
