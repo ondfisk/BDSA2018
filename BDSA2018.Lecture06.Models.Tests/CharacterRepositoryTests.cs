@@ -14,7 +14,7 @@ namespace BDSA2018.Lecture06.Tests
     public class CharacterRepositoryTests
     {
         [Fact]
-        public async Task Create_given_dto_creates_new_Character()
+        public async Task CreateAsync_given_dto_creates_new_Character()
         {
             using (var connection = await CreateConnectionAsync())
             using (var context = await CreateContextAsync(connection))
@@ -35,7 +35,7 @@ namespace BDSA2018.Lecture06.Tests
 
                 Assert.Equal(1, id);
 
-                var entity = context.Characters.Find(1);
+                var entity = await context.Characters.FindAsync(1);
 
                 Assert.Equal(1, entity.ActorId);
                 Assert.Equal("Bender", entity.Name);
@@ -45,7 +45,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Find_given_id_exists_returns_dto()
+        public async Task FindAsync_given_id_exists_returns_dto()
         {
             using (var connection = await CreateConnectionAsync())
             using (var context = await CreateContextAsync(connection))
@@ -108,7 +108,7 @@ namespace BDSA2018.Lecture06.Tests
 
                 var characters = repository.Read();
 
-                var character = characters.First();
+                var character = await characters.SingleAsync();
 
                 Assert.Equal(1, character.Id);
                 Assert.Equal("Fry", character.Name);
@@ -121,7 +121,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Update_given_non_existing_dto_returns_false()
+        public async Task UpdateAsync_given_non_existing_dto_returns_false()
         {
             using (var connection = await CreateConnectionAsync())
             using (var context = await CreateContextAsync(connection))
@@ -146,7 +146,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Update_given_existing_dto_updates_entity()
+        public async Task UpdateAsync_given_existing_dto_updates_entity()
         {
             using (var connection = await CreateConnectionAsync())
             using (var context = await CreateContextAsync(connection))
@@ -171,7 +171,7 @@ namespace BDSA2018.Lecture06.Tests
 
                 Assert.True(updated);
 
-                var entity = context.Characters.Find(1);
+                var entity = await context.Characters.FindAsync(1);
 
                 Assert.Equal(1, entity.ActorId);
                 Assert.Equal("Bender", entity.Name);
@@ -181,10 +181,10 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Delete_given_id_not_exists_return_false()
+        public async Task DeleteAsync_given_id_not_exists_return_false()
         {
             var mock = new Mock<IFuturamaContext>();
-            mock.Setup(s => s.Characters.Find(42)).Returns(default(Character));
+            mock.Setup(s => s.Characters.FindAsync(42)).ReturnsAsync(default(Character));
 
             var repository = new CharacterRepository(mock.Object);
 
@@ -194,7 +194,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Delete_given_id_exists_character_is_removed_from_context()
+        public async Task DeleteAsync_given_id_exists_character_is_removed_from_context()
         {
             var entity = new Character();
             var mock = new Mock<IFuturamaContext>();
@@ -208,7 +208,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Delete_given_id_exists_context_SaveChanges()
+        public async Task DeleteAsync_given_id_exists_context_SaveChanges()
         {
             var entity = new Character();
             var mock = new Mock<IFuturamaContext>();
@@ -222,7 +222,7 @@ namespace BDSA2018.Lecture06.Tests
         }
 
         [Fact]
-        public async Task Delete_given_id_exists_return_true()
+        public async Task DeleteAsync_given_id_exists_return_true()
         {
             var entity = new Character();
             var mock = new Mock<IFuturamaContext>();

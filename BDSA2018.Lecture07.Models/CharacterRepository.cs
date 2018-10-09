@@ -1,6 +1,5 @@
 ﻿using BDSA2018.Lecture07.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +14,7 @@ namespace BDSA2018.Lecture07.Models
             _context = context;
         }
 
-        public async Task<int> CreateAsync(CharacterCreateUpdateDTO character)
+        public async Task<CharacterDTO> CreateAsync(CharacterCreateUpdateDTO character)
         {
             var entity = new Character
             {
@@ -28,7 +27,7 @@ namespace BDSA2018.Lecture07.Models
             _context.Characters.Add(entity);
             await _context.SaveChangesAsync();
 
-            return entity.Id;
+            return await FindAsync(entity.Id);
         }
 
         public async Task<CharacterDTO> FindAsync(int characterId)
@@ -79,7 +78,7 @@ namespace BDSA2018.Lecture07.Models
             entity.Name = character.Name;
             entity.Species = character.Species;
             entity.Planet = character.Planet;
-           
+
             await _context.SaveChangesAsync();
 
             return true;

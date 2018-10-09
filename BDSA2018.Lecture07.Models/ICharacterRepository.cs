@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 namespace BDSA2018.Lecture07.Models
 {
     public interface ICharacterRepository
     {
-        Task<int> CreateAsync(CharacterCreateUpdateDTO character);
+        Task<CharacterDTO> CreateAsync(CharacterCreateUpdateDTO character);
 
         Task<CharacterDTO> FindAsync(int characterId);
 
