@@ -3,7 +3,6 @@ using BDSA2018.Lecture07.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
