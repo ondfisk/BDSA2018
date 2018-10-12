@@ -1,0 +1,40 @@
+[ApiController]
+
+Install-Package Microsoft.AspNetCore.Mvc.Core
+Install-Package MockQueryable.Moq
+
+            services.AddDbContext<FuturamaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FuturamaDatabase")));
+            services.AddScoped<IFuturamaContext, FuturamaContext>();
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+
+Install-Package Swashbuckle.AspNetCore
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            
+
+{
+  "ConnectionStrings": {
+    "FuturamaDatabase": "{ConnectionStrings:FuturamaDatabase}"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+{
+  "ConnectionStrings": {
+    "FuturamaDatabase": "Server=(localdb)\\MSSQLLocalDB;Database=Futurama;Trusted_Connection=True;"
+  }
+}
