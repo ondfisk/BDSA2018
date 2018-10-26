@@ -1,0 +1,25 @@
+        <TextBlock Text="Albums" Foreground="Red" FontSize="80" />
+        <ListView Name="MyListView" SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Name="MyStackPanel">
+            <Image Source="{Binding Cover}"/>
+            <TextBlock Text="{Binding Title}" />
+        </StackPanel>
+        
+        
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var repo = new AlbumRepository();
+
+            MyListView.ItemsSource = await repo.ReadAsync();
+        }
+
+        private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MyStackPanel.DataContext = e.AddedItems.First();
+        }
