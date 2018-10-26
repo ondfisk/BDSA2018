@@ -2,6 +2,7 @@
 using BDSA2018.Lecture09.MVVM.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Threading.Tasks;
 
 namespace BDSA2018.Lecture09.MVVM.Tests.ViewModels
 {
@@ -9,14 +10,19 @@ namespace BDSA2018.Lecture09.MVVM.Tests.ViewModels
     public class MainPageViewModelTests
     {
         [TestMethod]
-        public void Ctor_loads_Albums_from_repository()
+        public async Task Init_loads_Albums_from_repository()
         {
             var albums = new[] { new Album() };
             var repository = new Mock<IAlbumRepository>();
+            repository.Setup(s => s.ReadAsync()).ReturnsAsync(albums);
+
+            var taskCompletionSource = new TaskCompletionSource<bool>();
 
             var vm = new MainPageViewModel(repository.Object);
 
-            Assert.Equals(albums, vm.Albums);
+            await vm.Init();
+
+            CollectionAssert.AreEqual(albums, vm.Albums);
         }
     }
 }
