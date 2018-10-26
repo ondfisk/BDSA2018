@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BDSA2018.Lecture08.Models.ChainOfResponsibility
+﻿namespace BDSA2018.Lecture08.Models.ChainOfResponsibility
 {
     public class Purchase
     {

@@ -9,7 +9,7 @@ namespace BDSA2018.Lecture08.Models.ChainOfResponsibility
             // Setup Chain of Responsibility
             Approver larry = new Manager();
             Approver sam = new VicePresident();
-            Approver tammy = new President();
+            Approver tammy = new CEO();
 
             larry.SetSuccessor(sam);
             sam.SetSuccessor(tammy);

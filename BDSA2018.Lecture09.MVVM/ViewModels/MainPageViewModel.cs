@@ -20,7 +20,7 @@ namespace BDSA2018.Lecture09.MVVM.ViewModels
             _repository = repository;
         }
 
-        public async Task Init()
+        public override async Task Init()
         {
             var albums = await _repository.ReadAsync();
 

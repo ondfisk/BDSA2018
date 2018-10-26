@@ -13,6 +13,8 @@ namespace BDSA2018.Lecture08.Models.FactoryMethod
 
             var type = w.Assembly
                         .GetTypes()
+                        .Where(t => t.IsClass)
+                        .Where(t => w.IsAssignableFrom(t))
                         .Where(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                         .FirstOrDefault();
 

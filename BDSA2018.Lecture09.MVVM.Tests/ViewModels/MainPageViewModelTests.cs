@@ -16,8 +16,6 @@ namespace BDSA2018.Lecture09.MVVM.Tests.ViewModels
             var repository = new Mock<IAlbumRepository>();
             repository.Setup(s => s.ReadAsync()).ReturnsAsync(albums);
 
-            var taskCompletionSource = new TaskCompletionSource<bool>();
-
             var vm = new MainPageViewModel(repository.Object);
 
             await vm.Init();

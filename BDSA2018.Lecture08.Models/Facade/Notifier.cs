@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BDSA2018.Lecture08.Models.Facade
 {
-    public class Notifier
+    public class Notifier : INotifier
     {
         public void Notify(Article article, IEnumerable<Person> people)
         {
