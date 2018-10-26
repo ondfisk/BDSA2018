@@ -1,8 +1,9 @@
 ﻿using BDSA2018.Lecture08.Models.Animals;
+using BDSA2018.Lecture08.Models.IoCContainer;
 using Moq;
 using Xunit;
 
-namespace BDSA2018.Lecture08.Models.Tests.Services
+namespace BDSA2018.Lecture08.Models.Tests.IoCContainer
 {
     public class AnimalServiceTests
     {

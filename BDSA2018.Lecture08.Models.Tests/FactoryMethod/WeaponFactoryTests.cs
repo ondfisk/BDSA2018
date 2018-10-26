@@ -1,7 +1,7 @@
-﻿using BDSA2018.Lecture08.Models.Game;
+﻿using BDSA2018.Lecture08.Models.FactoryMethod;
 using Xunit;
 
-namespace BDSA2018.Lecture08.Models.Tests.Game
+namespace BDSA2018.Lecture08.Models.Tests.FactoryMethod
 {
     public class WeaponFactoryTests
     {

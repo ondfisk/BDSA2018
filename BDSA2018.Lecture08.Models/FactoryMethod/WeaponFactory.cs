@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace BDSA2018.Lecture08.Models.Game
+namespace BDSA2018.Lecture08.Models.FactoryMethod
 {
     public class WeaponFactory
     {
@@ -25,7 +25,7 @@ namespace BDSA2018.Lecture08.Models.Game
 
             return w.Assembly
                     .GetTypes()
-                    .Where(t => t != typeof(IWeapon))
+                    .Where(t => t.IsClass)
                     .Where(t => w.IsAssignableFrom(t))
                     .OrderBy(t => t.Name)
                     .Select(t => t.Name);

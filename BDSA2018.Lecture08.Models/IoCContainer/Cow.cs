@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BDSA2018.Lecture08.Models.Animals
+namespace BDSA2018.Lecture08.Models.IoCContainer
 {
     public class Cow : IAnimal
     {

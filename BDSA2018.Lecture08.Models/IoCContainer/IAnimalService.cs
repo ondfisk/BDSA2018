@@ -2,7 +2,7 @@
 
 namespace BDSA2018.Lecture08.Models.Animals
 {
-    public interface IAnimalService : IDisposable
+    public interface IAnimalService
     {
         void Speak();
     }
