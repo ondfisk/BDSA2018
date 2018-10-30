@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Futurama.Entities\Futurama.Entities.csproj" />
+    <ProjectReference Include="..\Futurama.Shared\Futurama.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

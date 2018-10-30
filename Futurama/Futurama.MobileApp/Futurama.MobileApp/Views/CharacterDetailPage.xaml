@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Futurama.MobileApp.Views.CharacterDetailPage"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" Command="{Binding EditCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="edit.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Delete" Command="{Binding DeleteCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="delete.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout Spacing="20" Padding="15">
+        <Label Text="Name:" FontSize="Medium" />
+        <Label Text="{Binding Name}" FontSize="Small"/>
+        <Label Text="Planet:" FontSize="Medium" />
+        <Label Text="{Binding Planet}" FontSize="Small"/>
+        <Label Text="Species:" FontSize="Medium" />
+        <Label Text="{Binding Species}" FontSize="Small"/>
+        <Label Text="Number of episodes:" FontSize="Medium" />
+        <Label Text="{Binding NumberOfEpisodes}" FontSize="Small"/>
+        <Label Text="Voiced by:" FontSize="Medium" />
+        <Label Text="{Binding ActorName}" FontSize="Small"/>
+    </StackLayout>
+</ContentPage>

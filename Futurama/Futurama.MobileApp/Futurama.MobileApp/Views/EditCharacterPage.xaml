@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Futurama.MobileApp.Views.EditCharacterPage"
+             Title="New Character">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Command="{Binding CancelCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="cancel.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Save" Command="{Binding SaveCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="save.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Name" FontSize="Medium" />
+            <Entry Text="{Binding Name}" FontSize="Small" />
+            <Label Text="Planet" FontSize="Medium" />
+            <Entry Text="{Binding Planet}" FontSize="Small" />
+            <Label Text="Species" FontSize="Medium" />
+            <Entry Text="{Binding Species}" FontSize="Small" />
+            <Label Text="Voiced by" FontSize="Medium" />
+            <Picker ItemsSource="{Binding Actors}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Actor}"  />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
