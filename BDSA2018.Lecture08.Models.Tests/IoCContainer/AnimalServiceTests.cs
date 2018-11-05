@@ -1,5 +1,4 @@
-﻿using BDSA2018.Lecture08.Models.Animals;
-using BDSA2018.Lecture08.Models.IoCContainer;
+﻿using BDSA2018.Lecture08.Models.IoCContainer;
 using Moq;
 using Xunit;
 

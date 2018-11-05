@@ -1,0 +1,21 @@
+        [Fact]
+        public void Controller_has_AttributeAttribute()
+        {
+            var controller = typeof(ActorsController);
+
+            var attributes = controller.GetCustomAttributes(false).Select(a => a.GetType());
+
+            Assert.Contains(typeof(AuthorizeAttribute), attributes);
+        }
+        
+        ?resource=d0104efa-486e-477a-a177-582ae81884e9
+        Token Name: lecture10
+        Grant Type: Authorization Code || Client Credentials
+        Callback URL: https://getpostman.com/postman
+        Auth URL: https://login.microsoftonline.com/bea229b6-7a08-4086-b44c-71f57f716bdb/oauth2/authorize
+        Access Token URL: https://login.microsoftonline.com/bea229b6-7a08-4086-b44c-71f57f716bdb/oauth2/token
+        Client ID: d0104efa-486e-477a-a177-582ae81884e9
+        Client Secret: ...
+        Scope: https://ituniversity.onmicrosoft.com/BDSA2018.Lecture10.Web
+        Client Authentication: Send client credentials in body
+        

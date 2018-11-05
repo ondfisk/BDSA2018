@@ -52,7 +52,7 @@ namespace BDSA2018.Lecture08.Models.Tests.FactoryMethod
 
             var weapons = factory.Available();
 
-            Assert.Equal(new[] { "Crossbow", "Grenade", "Sword" }, weapons);
+            Assert.Equal(new[] { "Crossbow", "Grenade", "Spear", "Sword" }, weapons);
         }
     }
 }
