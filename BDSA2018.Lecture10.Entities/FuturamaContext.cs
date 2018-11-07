@@ -30,7 +30,7 @@ namespace BDSA2018.Lecture10.Entities
             modelBuilder.Entity<Character>().HasData(
                 new Character { Id = 1, ActorId = 1, Name = "Philip J. Fry", Species = "Human", Planet = "Earth" },
                 new Character { Id = 2, ActorId = 2, Name = "Leela Turanga", Species = "Mutant, Human", Planet = "Earth" },
-                new Character { Id = 3, ActorId = 3, Name = "Bender Bending Rodrique", Species = "Robot", Planet = "Earth" },
+                new Character { Id = 3, ActorId = 3, Name = "Bender Bending Rodriguez", Species = "Robot", Planet = "Earth" },
                 new Character { Id = 4, ActorId = 1, Name = "John A. Zoidberg", Species = "Decapodian", Planet = "Decapod 10" },
                 new Character { Id = 5, ActorId = 4, Name = "Amy Wong", Species = "Human", Planet = "Mars" },
                 new Character { Id = 6, ActorId = 5, Name = "Hermes Conrad", Species = "Human", Planet = "Earth" },
