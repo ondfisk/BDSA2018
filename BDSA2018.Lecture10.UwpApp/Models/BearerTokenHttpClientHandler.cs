@@ -1,4 +1,5 @@
 ﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -11,12 +12,12 @@ namespace BDSA2018.Lecture10.UwpApp.Models
     public class BearerTokenHttpClientHandler : HttpClientHandler
     {
         private readonly IPublicClientApplication _publicClientApplication;
-        private readonly IReadOnlyCollection<string> _scopes;
+        private readonly ISettings _settings;
 
         public BearerTokenHttpClientHandler(IPublicClientApplication publicClientApplication, ISettings settings)
         {
             _publicClientApplication = publicClientApplication;
-            _scopes = settings.Scopes;
+            _settings = settings;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -26,13 +27,30 @@ namespace BDSA2018.Lecture10.UwpApp.Models
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             }
 
-            var accounts = await _publicClientApplication.GetAccountsAsync();
+            var account = await GetAccountByPolicyAsync(_settings.SignUpSignInPolicy);
 
-            var result = await _publicClientApplication.AcquireTokenSilentAsync(_scopes, accounts.First());
+            var authenticationResult = await _publicClientApplication.AcquireTokenSilentAsync(_settings.Scopes, account, _settings.Authority, false);
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authenticationResult.AccessToken);
 
             return await base.SendAsync(request, cancellationToken);
+        }
+
+        private async Task<IAccount> GetAccountByPolicyAsync(string policy)
+        {
+            var accounts = await _publicClientApplication.GetAccountsAsync();
+
+            foreach (var account in accounts)
+            {
+                var userIdentifier = account.HomeAccountId.ObjectId.Split('.')[0];
+
+                if (userIdentifier.EndsWith(policy, StringComparison.OrdinalIgnoreCase))
+                {
+                    return account;
+                }
+            }
+
+            return null;
         }
     }
 }

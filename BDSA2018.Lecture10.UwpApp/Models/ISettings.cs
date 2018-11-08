@@ -5,9 +5,15 @@ namespace BDSA2018.Lecture10.UwpApp.Models
 {
     public interface ISettings
     {
-        Uri BackendUrl { get; }
+        string Tenant { get; }
         string ClientId { get; }
         IReadOnlyCollection<string> Scopes { get; }
-        string TenantId { get; }
+        string Authority { get; }
+        string AuthorityEditProfile { get; }
+        string AuthorityResetPassword { get; }
+        Uri BackendUrl { get; }
+        string EditProfilePolicy { get; }
+        string ResetPasswordPolicy { get; }
+        string SignUpSignInPolicy { get; }
     }
 }

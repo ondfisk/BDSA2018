@@ -1,6 +1,5 @@
 ﻿using BDSA2018.Lecture10.Entities;
 using BDSA2018.Lecture10.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +27,11 @@ namespace BDSA2018.Lecture10.Web
             {
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddAzureAdBearer(options => Configuration.Bind("AzureAd", options));
+            .AddJwtBearer(options =>
+            {
+                options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0/";
+                options.Audience = Configuration["AzureAdB2C:ClientId"];
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddDbContext<FuturamaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FuturamaDatabase")));

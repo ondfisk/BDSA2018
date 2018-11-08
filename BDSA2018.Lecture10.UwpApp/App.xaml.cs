@@ -106,7 +106,7 @@ namespace BDSA2018.Lecture10.UwpApp
 
             var settings = new Settings();
 
-            var publicClientApplication = new PublicClientApplication(settings.ClientId, $"https://login.microsoftonline.com/{settings.TenantId}");
+            var publicClientApplication = new PublicClientApplication(settings.ClientId, settings.Authority);
 
             var handler = new BearerTokenHttpClientHandler(publicClientApplication, settings);
 

@@ -1,7 +1,6 @@
 ﻿using BDSA2018.Lecture10.UwpApp.Models;
 using Microsoft.Identity.Client;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -66,11 +65,11 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
             }
             Loading = true;
 
-            var account = await GetAccountAsync();
+            var account = await GetAccountByPolicyAsync(_settings.SignUpSignInPolicy);
 
             if (account != null)
             {
-                var authResult = await _publicClientApplication.AcquireTokenSilentAsync(_settings.Scopes, account);
+                var authResult = await _publicClientApplication.AcquireTokenSilentAsync(_settings.Scopes, account, _settings.Authority, true);
 
                 if (authResult != null)
                 {
@@ -87,7 +86,7 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
             AuthenticationResult authenticationResult;
             try
             {
-                authenticationResult = await _publicClientApplication.AcquireTokenAsync(_settings.Scopes);
+                authenticationResult = await _publicClientApplication.AcquireTokenAsync(_settings.Scopes, default(IAccount), UIBehavior.SelectAccount, string.Empty, null, _settings.Authority);
             }
             catch (MsalClientException e)
             {
@@ -103,27 +102,32 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
 
         private async Task ExecuteSignOutCommand()
         {
-            var account = await GetAccountAsync();
+            var accounts = await _publicClientApplication.GetAccountsAsync();
 
-            if (account != null)
+            foreach (var account in accounts)
             {
                 await _publicClientApplication.RemoveAsync(account);
-
-                SignedIn = false;
-                Username = null;
             }
+
+            SignedIn = false;
+            Username = null;
         }
 
-        private Task ExecuteGoToCharactersPageCommand()
-        {
-            throw new NotImplementedException();
-        }
-
-        private async Task<IAccount> GetAccountAsync()
+        private async Task<IAccount> GetAccountByPolicyAsync(string policy)
         {
             var accounts = await _publicClientApplication.GetAccountsAsync();
 
-            return accounts.FirstOrDefault();
+            foreach (var account in accounts)
+            {
+                var userIdentifier = account.HomeAccountId.ObjectId.Split('.')[0];
+
+                if (userIdentifier.EndsWith(policy, StringComparison.OrdinalIgnoreCase))
+                {
+                    return account;
+                }
+            }
+
+            return null;
         }
     }
 }
