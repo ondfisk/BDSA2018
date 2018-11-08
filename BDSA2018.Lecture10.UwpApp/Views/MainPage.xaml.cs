@@ -1,19 +1,11 @@
 ﻿using BDSA2018.Lecture10.UwpApp.ViewModels;
-using BDSA2018.Lecture10.UwpApp.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -34,9 +26,11 @@ namespace BDSA2018.Lecture10.UwpApp.Views
             DataContext = _vm = (Application.Current as App).Container.GetRequiredService<MainViewModel>();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Frame.Navigate(typeof(CharactersPage));
+            _vm.LoadCommand.Execute(e.Parameter);
+
+            base.OnNavigatedTo(e);
         }
     }
 }

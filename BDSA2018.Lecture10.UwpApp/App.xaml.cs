@@ -2,10 +2,12 @@
 using BDSA2018.Lecture10.UwpApp.ViewModels;
 using BDSA2018.Lecture10.UwpApp.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Client;
 using System;
 using System.Net.Http;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -17,10 +19,7 @@ namespace BDSA2018.Lecture10.UwpApp
     /// </summary>
     sealed partial class App : Application
     {
-        //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
-        private static readonly Uri _backendUrl = new Uri("https://localhost:44326");
-
-        private readonly Lazy<IServiceProvider> _lazyProvider = new Lazy<IServiceProvider>(() => ConfigureServices());
+        private readonly Lazy<IServiceProvider> _lazyProvider;
 
         public IServiceProvider Container => _lazyProvider.Value;
 
@@ -32,6 +31,8 @@ namespace BDSA2018.Lecture10.UwpApp
         {
             InitializeComponent();
             Suspending += OnSuspending;
+
+            _lazyProvider = new Lazy<IServiceProvider>(() => ConfigureServices());
         }
 
         /// <summary>
@@ -99,16 +100,22 @@ namespace BDSA2018.Lecture10.UwpApp
             deferral.Complete();
         }
 
-        private static IServiceProvider ConfigureServices()
+        private IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
 
-            var handler = new HttpClientHandler();
-#if DEBUG
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-#endif
+            var settings = new Settings();
 
-            services.AddSingleton(_ => new HttpClient(handler) { BaseAddress = _backendUrl });
+            var publicClientApplication = new PublicClientApplication(settings.ClientId, $"https://login.microsoftonline.com/{settings.TenantId}");
+
+            var handler = new BearerTokenHttpClientHandler(publicClientApplication, settings);
+
+            var httpClient = new HttpClient(handler) { BaseAddress = settings.BackendUrl };
+
+            services.AddSingleton<ISettings>(settings);
+            services.AddSingleton<IPublicClientApplication>(publicClientApplication);
+            services.AddSingleton(httpClient);
+            services.AddScoped<INavigation>(_ => new Navigation(Window.Current.Content as Frame));
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<MainViewModel>();

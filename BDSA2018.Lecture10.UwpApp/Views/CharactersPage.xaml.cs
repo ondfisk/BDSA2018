@@ -1,6 +1,5 @@
 ﻿using BDSA2018.Lecture10.UwpApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -25,18 +24,9 @@ namespace BDSA2018.Lecture10.UwpApp.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _vm.LoadCommand.Execute(null);
+            _vm.LoadCommand.Execute(e.Parameter);
 
             base.OnNavigatedTo(e);
-        }
-
-        private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var item = e.AddedItems.FirstOrDefault();
-            if (item != null)
-            {
-                Frame.Navigate(typeof(CharacterPage), item);
-            }
         }
     }
 }

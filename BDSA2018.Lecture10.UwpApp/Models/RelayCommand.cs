@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace BDSA2018.Lecture10.UwpApp.ViewModels
+namespace BDSA2018.Lecture10.UwpApp.Models
 {
     public class RelayCommand : ICommand
     {

@@ -7,11 +7,11 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        private bool _isBusy = false;
-        public bool IsBusy
+        private bool _loading = false;
+        public bool Loading
         {
-            get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
+            get => _loading;
+            set => SetProperty(ref _loading, value);
         }
 
         private string _title;
@@ -20,6 +20,8 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
             get => _title;
             set => SetProperty(ref _title, value);
         }
+
+        public INavigation Navigation { get; }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName]string propertyName = null,
@@ -39,6 +41,11 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
         protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public BaseViewModel(INavigation navigation)
+        {
+            Navigation = navigation;
         }
     }
 }

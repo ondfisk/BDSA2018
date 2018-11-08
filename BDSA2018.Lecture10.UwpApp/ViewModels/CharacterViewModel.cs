@@ -1,15 +1,11 @@
 ﻿using BDSA2018.Lecture10.Shared;
 using BDSA2018.Lecture10.UwpApp.Models;
-using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BDSA2018.Lecture10.UwpApp.ViewModels
 {
     public class CharacterViewModel : BaseViewModel
     {
-        private readonly ICharacterRepository _repository;
-
         private int _id;
         public int Id
         {
@@ -59,12 +55,11 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
             set => SetProperty(ref _numberOfEpisodes, value);
         }
 
-        public ICommand LoadCommand { get; set; }
+        public ICommand LoadCommand { get; }
 
-        public CharacterViewModel(ICharacterRepository repository)
+        public CharacterViewModel(INavigation navigation)
+            : base(navigation)
         {
-            _repository = repository;
-
             LoadCommand = new RelayCommand(p => ExecuteLoadCommand(p));
         }
 

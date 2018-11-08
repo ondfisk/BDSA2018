@@ -10,39 +10,53 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
     {
         private readonly ICharacterRepository _repository;
 
-        public ObservableCollection<CharacterDTO> Characters { get; set; }
+        private CharacterDTO _selected;
+        public CharacterDTO Selected
+        {
+            get => _selected;
+            set => SetProperty(ref _selected, value, nameof(Selected), () =>
+            {
+                if (Selected != null)
+                {
+                    Navigation.GoToCharacterPageCommand.Execute(Selected);
+                }
+            });
+        }
 
-        public ICommand AddCommand { get; set; }
-        public ICommand LoadCommand { get; set; }
+        public ObservableCollection<CharacterDTO> Items { get; set; }
 
-        public CharactersViewModel(ICharacterRepository repository)
+        public ICommand AddCommand { get; }
+        public ICommand LoadCommand { get; }
+
+        public CharactersViewModel(INavigation navigation, ICharacterRepository repository)
+            : base(navigation)
         {
             _repository = repository;
 
             Title = "Characters";
-            Characters = new ObservableCollection<CharacterDTO>();
+            Items = new ObservableCollection<CharacterDTO>();
 
             LoadCommand = new RelayCommand(async _ => await ExecuteLoadCommand());
         }
 
         private async Task ExecuteLoadCommand()
         {
-            if (IsBusy)
+            if (Loading)
             {
                 return;
             }
-            IsBusy = true;
+            Loading = true;
 
-            Characters.Clear();
+            Items.Clear();
 
             var characters = await _repository.ReadAsync();
 
             foreach (var character in characters)
             {
-                Characters.Add(character);
+                Items.Add(character);
             }
 
-            IsBusy = false;
+            Loading = false;
         }
     }
 }

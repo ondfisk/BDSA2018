@@ -7,11 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.TopAppBar>
+        <CommandBar>
+            <AppBarButton Command="{Binding Navigation.GoBackCommand}" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+        </CommandBar>
+    </Page.TopAppBar>
     <Grid>
         <StackPanel>
             <TextBlock Text="{Binding Title}" FontSize="50" Margin="50" />
-            <ListView x:Name="List" ItemsSource="{Binding Characters}" SelectionMode="Single" SelectionChanged="List_SelectionChanged">
+            <ListView x:Name="List" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding Selected, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="20,10,20,10">
@@ -21,6 +25,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <ProgressRing IsActive="{Binding Loading}"/>
         </StackPanel>
     </Grid>
 </Page>

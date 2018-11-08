@@ -11,6 +11,11 @@
     <Page.Resources>
         <converters:StringFormatConverter x:Key="StringFormatConverter" />
     </Page.Resources>
+    <Page.TopAppBar>
+        <CommandBar>
+            <AppBarButton Command="{Binding Navigation.GoBackCommand}" Style="{StaticResource NavigationBackButtonNormalStyle}" />
+        </CommandBar>
+    </Page.TopAppBar>
     <Grid>
         <StackPanel>
             <TextBlock Text="{Binding Title}" FontSize="50" Margin="50" />
@@ -20,6 +25,7 @@
                 <TextBlock Text="{Binding Planet, Converter={StaticResource StringFormatConverter}, ConverterParameter='Planet: {0}'}" Margin="50,0" />
                 <TextBlock Text="{Binding ActorName, Converter={StaticResource StringFormatConverter}, ConverterParameter='Voiced by: {0}'}" Margin="50,0" />
             </StackPanel>
+            <ProgressRing IsActive="{Binding Loading}"/>
         </StackPanel>
     </Grid>
 </Page>
