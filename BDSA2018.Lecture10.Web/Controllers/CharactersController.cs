@@ -1,5 +1,6 @@
 ﻿using BDSA2018.Lecture10.Models;
 using BDSA2018.Lecture10.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace BDSA2018.Lecture10.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CharactersController : ControllerBase
     {
         private ICharacterRepository _repository;

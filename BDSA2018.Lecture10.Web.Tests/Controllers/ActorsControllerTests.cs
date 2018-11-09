@@ -1,6 +1,7 @@
 ﻿using BDSA2018.Lecture10.Models;
 using BDSA2018.Lecture10.Shared;
 using BDSA2018.Lecture10.Web.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MockQueryable.Moq;
 using Moq;
@@ -12,6 +13,16 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
 {
     public class ActorsControllerTests
     {
+        [Fact]
+        public void Controller_has_AttributeAttribute()
+        {
+            var controller = typeof(ActorsController);
+
+            var attributes = controller.GetCustomAttributes(false).Select(a => a.GetType());
+
+            Assert.Contains(typeof(AuthorizeAttribute), attributes);
+        }
+
         [Fact]
         public async Task Get_returns_dtos()
         {
