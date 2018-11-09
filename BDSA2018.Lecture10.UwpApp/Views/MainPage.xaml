@@ -17,7 +17,8 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Sign In" Command="{Binding SignInCommand}" Margin="50" FontSize="25" Padding="25" />
                 <Button Content="Sign Out" Command="{Binding SignOutCommand}" Margin="0,50,50,50" FontSize="25" Padding="25" />
-                <Button Content="Characters" Command="{Binding Navigation.GoToCharactersPageCommand}" Visibility="{Binding SignedIn, Converter={StaticResource BooleanVisibilityConverter}}" Margin="0,50" FontSize="25" Padding="25" />
+                <Button Content="Characters" Command="{Binding Navigation.GoToCharactersPageCommand}" Visibility="{Binding SignedIn, Converter={StaticResource BooleanVisibilityConverter}}" Margin="0,50,50,50" FontSize="25" Padding="25" />
+                <Button Content="Log" Command="{Binding Navigation.GoToLogPageCommand}" Margin="0,50" FontSize="25" Padding="25" />
             </StackPanel>
             <TextBlock Text="{Binding Username}" FontSize="50" Margin="50" />
             <TextBlock Text="{Binding Message}" FontSize="50" Foreground="Red" Margin="50" />

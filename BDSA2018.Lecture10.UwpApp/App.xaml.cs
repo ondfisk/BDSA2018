@@ -4,6 +4,7 @@ using BDSA2018.Lecture10.UwpApp.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 using System;
+using System.Net;
 using System.Net.Http;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -113,14 +114,16 @@ namespace BDSA2018.Lecture10.UwpApp
             var httpClient = new HttpClient(handler) { BaseAddress = settings.BackendUrl };
 
             services.AddSingleton<ISettings>(settings);
-            services.AddSingleton<IPublicClientApplication>(publicClientApplication);
+            services.AddSingleton<HttpClientHandler>(handler);
             services.AddSingleton(httpClient);
+            services.AddSingleton<IPublicClientApplication>(publicClientApplication);
             services.AddScoped<INavigation>(_ => new Navigation(Window.Current.Content as Frame));
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<MainViewModel>();
             services.AddScoped<CharactersViewModel>();
             services.AddScoped<CharacterViewModel>();
+            services.AddScoped<LogViewModel>();
 
             return services.BuildServiceProvider();
         }

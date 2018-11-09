@@ -2,6 +2,7 @@
 using BDSA2018.Lecture10.Shared;
 using BDSA2018.Lecture10.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using MockQueryable.Moq;
 using Moq;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
             var all = new[] { dto }.AsQueryable().BuildMock();
             var repository = new Mock<IActorRepository>();
             repository.Setup(s => s.Read()).Returns(all.Object);
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var result = await controller.Get();
 
@@ -33,8 +34,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
             var dto = new ActorDetailedDTO();
             var repository = new Mock<IActorRepository>();
             repository.Setup(s => s.FindAsync(42)).ReturnsAsync(dto);
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var get = await controller.Get(42);
 
@@ -45,8 +46,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         public async Task Get_given_non_existing_id_returns_NotFound()
         {
             var repository = new Mock<IActorRepository>();
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var get = await controller.Get(42);
 
@@ -58,8 +59,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         {
             var repository = new Mock<IActorRepository>();
             repository.Setup(s => s.CreateAsync(It.IsAny<ActorCreateUpdateDTO>())).ReturnsAsync(new ActorDetailedDTO());
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var dto = new ActorCreateUpdateDTO();
 
@@ -75,8 +76,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
             var output = new ActorDetailedDTO { Id = 42 };
             var repository = new Mock<IActorRepository>();
             repository.Setup(s => s.CreateAsync(input)).ReturnsAsync(output);
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var post = await controller.Post(input);
             var result = post.Result as CreatedAtActionResult;
@@ -90,8 +91,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         public async Task Put_given_dto_updates_actor()
         {
             var repository = new Mock<IActorRepository>();
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var dto = new ActorCreateUpdateDTO();
 
@@ -106,7 +107,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
             var dto = new ActorCreateUpdateDTO();
             var repository = new Mock<IActorRepository>();
             repository.Setup(s => s.UpdateAsync(dto)).ReturnsAsync(true);
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var put = await controller.Put(42, dto);
 
@@ -117,8 +119,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         public async Task Put_given_repository_returns_false_returns_NotFound()
         {
             var repository = new Mock<IActorRepository>();
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var dto = new ActorCreateUpdateDTO();
 
@@ -131,8 +133,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         public async Task Delete_given_id_deletes_actor()
         {
             var repository = new Mock<IActorRepository>();
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             await controller.Delete(42);
 
@@ -144,7 +146,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         {
             var repository = new Mock<IActorRepository>();
             repository.Setup(s => s.DeleteAsync(42)).ReturnsAsync(true);
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var delete = await controller.Delete(42);
 
@@ -155,8 +158,8 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         public async Task Delete_given_repository_returns_false_returns_NotFound()
         {
             var repository = new Mock<IActorRepository>();
-
-            var controller = new ActorsController(repository.Object);
+            var hub = new Mock<IHubContext<LogHub>>();
+            var controller = new ActorsController(repository.Object, hub.Object);
 
             var delete = await controller.Delete(42);
 

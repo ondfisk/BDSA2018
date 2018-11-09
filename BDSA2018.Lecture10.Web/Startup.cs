@@ -1,5 +1,6 @@
 ﻿using BDSA2018.Lecture10.Entities;
 using BDSA2018.Lecture10.Models;
+using BDSA2018.Lecture10.Web.Controllers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +41,8 @@ namespace BDSA2018.Lecture10.Web
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +57,15 @@ namespace BDSA2018.Lecture10.Web
                 app.UseHsts();
             }
 
+            // Make sure the CORS middleware is ahead of SignalR.
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("https://localhost:5000")
+                    .AllowAnyHeader()
+                    .WithMethods("GET", "POST")
+                    .AllowCredentials();
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -63,6 +75,11 @@ namespace BDSA2018.Lecture10.Web
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
+
+            app.UseSignalR(route =>
+            {
+                route.MapHub<LogHub>("/hubs/log");
+            });
         }
     }
 }
