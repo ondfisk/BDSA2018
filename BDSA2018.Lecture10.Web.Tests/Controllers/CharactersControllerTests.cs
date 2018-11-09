@@ -19,7 +19,7 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
             var dto = new CharacterDTO();
             var repository = new Mock<ICharacterRepository>();
             repository.Setup(s => s.FindAsync(42)).ReturnsAsync(dto);
-            var hub = new Mock<IHubContext<LogHub>>();
+            var hub = new Mock<IHubContext<LogHub>> { DefaultValue = DefaultValue.Mock };
             var controller = new CharactersController(repository.Object, hub.Object);
 
             var get = await controller.Get(42);
@@ -32,7 +32,7 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
         {
             var dto = new CharacterDTO();
             var repository = new Mock<ICharacterRepository>();
-            var hub = new Mock<IHubContext<LogHub>>();
+            var hub = new Mock<IHubContext<LogHub>> { DefaultValue = DefaultValue.Mock };
             var controller = new CharactersController(repository.Object, hub.Object);
 
             var get = await controller.Get(42);
@@ -49,7 +49,7 @@ namespace BDSA2018.Lecture10.Web.Tests.Controllers
             var dtos = new[] { dto }.AsQueryable().BuildMock();
             var repository = new Mock<ICharacterRepository>();
             repository.Setup(s => s.Read()).Returns(dtos.Object);
-            var hub = new Mock<IHubContext<LogHub>>();
+            var hub = new Mock<IHubContext<LogHub>> { DefaultValue = DefaultValue.Mock };
             var controller = new CharactersController(repository.Object, hub.Object);
 
             var get = await controller.Get();

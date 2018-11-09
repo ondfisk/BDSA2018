@@ -2,13 +2,10 @@
 using BDSA2018.Lecture10.UwpApp.ViewModels;
 using BDSA2018.Lecture10.UwpApp.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Client;
 using System;
-using System.Net;
 using System.Net.Http;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -107,16 +104,13 @@ namespace BDSA2018.Lecture10.UwpApp
 
             var settings = new Settings();
 
-            var publicClientApplication = new PublicClientApplication(settings.ClientId, $"https://login.microsoftonline.com/{settings.TenantId}");
-
-            var handler = new BearerTokenHttpClientHandler(publicClientApplication, settings);
+            var handler = new CustomHttpClientHandler(settings);
 
             var httpClient = new HttpClient(handler) { BaseAddress = settings.BackendUrl };
 
             services.AddSingleton<ISettings>(settings);
             services.AddSingleton<HttpClientHandler>(handler);
             services.AddSingleton(httpClient);
-            services.AddSingleton<IPublicClientApplication>(publicClientApplication);
             services.AddScoped<INavigation>(_ => new Navigation(Window.Current.Content as Frame));
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();

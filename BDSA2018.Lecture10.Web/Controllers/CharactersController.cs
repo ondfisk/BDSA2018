@@ -11,7 +11,6 @@ namespace BDSA2018.Lecture10.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class CharactersController : ControllerBase
     {
         private readonly ICharacterRepository _repository;

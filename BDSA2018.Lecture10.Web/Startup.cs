@@ -1,8 +1,6 @@
 ﻿using BDSA2018.Lecture10.Entities;
 using BDSA2018.Lecture10.Models;
 using BDSA2018.Lecture10.Web.Controllers;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +23,6 @@ namespace BDSA2018.Lecture10.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(sharedOptions =>
-            {
-                sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddAzureAdBearer(options => Configuration.Bind("AzureAd", options));
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddDbContext<FuturamaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FuturamaDatabase")));
             services.AddScoped<IFuturamaContext, FuturamaContext>();
@@ -57,15 +49,6 @@ namespace BDSA2018.Lecture10.Web
                 app.UseHsts();
             }
 
-            // Make sure the CORS middleware is ahead of SignalR.
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("https://localhost:5000")
-                    .AllowAnyHeader()
-                    .WithMethods("GET", "POST")
-                    .AllowCredentials();
-            });
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -73,7 +56,6 @@ namespace BDSA2018.Lecture10.Web
             });
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseMvc();
 
             app.UseSignalR(route =>
