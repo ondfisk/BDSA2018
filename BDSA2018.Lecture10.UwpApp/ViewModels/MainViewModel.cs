@@ -1,6 +1,5 @@
 ﻿using BDSA2018.Lecture10.UwpApp.Models;
 using Microsoft.Identity.Client;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -112,11 +111,6 @@ namespace BDSA2018.Lecture10.UwpApp.ViewModels
                 SignedIn = false;
                 Username = null;
             }
-        }
-
-        private Task ExecuteGoToCharactersPageCommand()
-        {
-            throw new NotImplementedException();
         }
 
         private async Task<IAccount> GetAccountAsync()
