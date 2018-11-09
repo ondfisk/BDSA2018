@@ -18,4 +18,4 @@
         Client Secret: ...
         Scope: https://ituniversity.onmicrosoft.com/BDSA2018.Lecture10.Web
         Client Authentication: Send client credentials in body
-        
+       
