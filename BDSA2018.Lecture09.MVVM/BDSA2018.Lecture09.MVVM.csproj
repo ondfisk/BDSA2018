@@ -157,7 +157,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.9</Version>
+      <Version>6.2.2</Version>
     </PackageReference>
     <PackageReference Include="moq">
       <Version>4.10.0</Version>
