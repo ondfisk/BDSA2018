@@ -118,9 +118,11 @@ namespace BDSA2018.Lecture11.UwpApp
             services.AddScoped<INavigation>(_ => new Navigation(Window.Current.Content as Frame));
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<IGraphRepository, GraphRepository>();
             services.AddScoped<MainViewModel>();
             services.AddScoped<CharactersViewModel>();
             services.AddScoped<CharacterViewModel>();
+            services.AddScoped<MeViewModel>();
 
             return services.BuildServiceProvider();
         }

@@ -13,10 +13,11 @@ namespace BDSA2018.Lecture11.UwpApp
         {
             _frame = frame;
 
-            GoBackCommand = new RelayCommand(p => { if (_frame.CanGoBack) { _frame.GoBack(); } });
-            GoToMainPageCommand = new RelayCommand(_ => _frame.Navigate(typeof(MainPage)));
-            GoToCharactersPageCommand = new RelayCommand(_ => _frame.Navigate(typeof(CharactersPage)));
+            GoBackCommand = new RelayCommand(_ => { if (_frame.CanGoBack) { _frame.GoBack(); } });
+            GoToMainPageCommand = new RelayCommand(p => _frame.Navigate(typeof(MainPage), p));
+            GoToCharactersPageCommand = new RelayCommand(p => _frame.Navigate(typeof(CharactersPage), p));
             GoToCharacterPageCommand = new RelayCommand(p => _frame.Navigate(typeof(CharacterPage), p));
+            GoToMePageCommand = new RelayCommand(p => _frame.Navigate(typeof(MePage), p));
         }
 
         public ICommand GoBackCommand { get; }
@@ -26,5 +27,7 @@ namespace BDSA2018.Lecture11.UwpApp
         public ICommand GoToCharactersPageCommand { get; }
 
         public ICommand GoToCharacterPageCommand { get; }
+
+        public ICommand GoToMePageCommand { get; }
     }
 }

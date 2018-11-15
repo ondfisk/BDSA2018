@@ -8,5 +8,6 @@ namespace BDSA2018.Lecture11.UwpApp
         ICommand GoToCharacterPageCommand { get; }
         ICommand GoToCharactersPageCommand { get; }
         ICommand GoToMainPageCommand { get; }
+        ICommand GoToMePageCommand { get; }
     }
 }

@@ -1,6 +1,5 @@
 using BDSA2018.Lecture11.Shared;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -22,13 +21,6 @@ namespace BDSA2018.Lecture11.UwpApp.Models
             return await response.Content.ReadAsAsync<CharacterDTO>();
         }
 
-        public async Task<bool> DeleteAsync(int characterId)
-        {
-            var response = await _client.DeleteAsync($"api/characters/{characterId}");
-
-            return response.IsSuccessStatusCode;
-        }
-
         public async Task<CharacterDTO> FindAsync(int characterId)
         {
             var response = await _client.GetAsync($"api/characters/{characterId}");
@@ -46,6 +38,13 @@ namespace BDSA2018.Lecture11.UwpApp.Models
         public async Task<bool> UpdateAsync(CharacterCreateUpdateDTO character)
         {
             var response = await _client.PutAsJsonAsync($"api/characters/{character.Id}", character);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteAsync(int characterId)
+        {
+            var response = await _client.DeleteAsync($"api/characters/{characterId}");
 
             return response.IsSuccessStatusCode;
         }

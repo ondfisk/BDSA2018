@@ -69,12 +69,21 @@ namespace BDSA2018.Lecture11.UwpApp.ViewModels
 
             if (account != null)
             {
-                var authResult = await _publicClientApplication.AcquireTokenSilentAsync(_settings.Scopes, account);
-
-                if (authResult != null)
+                AuthenticationResult authenticationResult;
+                try
+                {
+                    authenticationResult = await _publicClientApplication.AcquireTokenSilentAsync(_settings.Scopes, account);
+                }
+                catch (MsalException e)
+                {
+                    Message = e.Message;
+                    Loading = false;
+                    return;
+                }
+                if (authenticationResult != null)
                 {
                     SignedIn = true;
-                    Username = authResult.Account.Username;
+                    Username = authenticationResult.Account.Username;
                 }
             }
 
@@ -88,7 +97,7 @@ namespace BDSA2018.Lecture11.UwpApp.ViewModels
             {
                 authenticationResult = await _publicClientApplication.AcquireTokenAsync(_settings.Scopes);
             }
-            catch (MsalClientException e)
+            catch (MsalException e)
             {
                 Message = e.Message;
                 return;
