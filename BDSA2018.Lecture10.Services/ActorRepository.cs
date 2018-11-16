@@ -4,7 +4,7 @@ using BDSA2018.Lecture10.Entities;
 using BDSA2018.Lecture10.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace BDSA2018.Lecture10.Models
+namespace BDSA2018.Lecture10.Services
 {
     public class ActorRepository : IActorRepository
     {

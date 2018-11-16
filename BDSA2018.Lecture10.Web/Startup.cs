@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using BDSA2018.Lecture10.Entities;
 using Microsoft.EntityFrameworkCore;
-using BDSA2018.Lecture10.Models;
+using BDSA2018.Lecture10.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace BDSA2018.Lecture10.Web

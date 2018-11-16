@@ -1,5 +1,5 @@
 using BDSA2018.Lecture10.Entities;
-using BDSA2018.Lecture10.Models;
+using BDSA2018.Lecture10.Services;
 using BDSA2018.Lecture10.Shared;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BDSA2018.Lecture10.Models.Tests
+namespace BDSA2018.Lecture10.Services.Tests
 {
     public class ActorRepositoryTests
     {

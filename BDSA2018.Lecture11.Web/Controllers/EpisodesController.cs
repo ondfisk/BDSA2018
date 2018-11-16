@@ -1,60 +1,60 @@
-﻿using BDSA2018.Lecture10.Services;
-using BDSA2018.Lecture10.Shared;
+using BDSA2018.Lecture11.Services;
+using BDSA2018.Lecture11.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BDSA2018.Lecture10.Web.Controllers
+namespace BDSA2018.Lecture11.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CharactersController : ControllerBase
+    public class EpisodesController : ControllerBase
     {
-        private ICharacterRepository _repository;
+        private IEpisodeRepository _repository;
 
-        public CharactersController(ICharacterRepository repository)
+        public EpisodesController(IEpisodeRepository repository)
         {
             _repository = repository;
         }
 
-        // GET api/characters
+        // GET api/episodes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CharacterDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<EpisodeDTO>>> Get()
         {
             return await _repository.Read().ToListAsync();
         }
 
-        // GET api/characters/5
+        // GET api/episodes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CharacterDTO>> Get(int id)
+        public async Task<ActionResult<EpisodeDetailedDTO>> Get(int id)
         {
-            var character = await _repository.FindAsync(id);
+            var episode = await _repository.FindAsync(id);
 
-            if (character == null)
+            if (episode == null)
             {
                 return NotFound();
             }
 
-            return character;
+            return episode;
         }
 
-        // POST api/characters
+        // POST api/episodes
         [HttpPost]
-        public async Task<ActionResult<CharacterDTO>> Post([FromBody] CharacterCreateUpdateDTO character)
+        public async Task<ActionResult<EpisodeDetailedDTO>> Post([FromBody] EpisodeCreateUpdateDTO episode)
         {
-            var dto = await _repository.CreateAsync(character);
+            var dto = await _repository.CreateAsync(episode);
 
             return CreatedAtAction(nameof(Get), new { id = dto.Id }, dto);
         }
 
-        // PUT api/characters/5
+        // PUT api/episodes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] CharacterCreateUpdateDTO character)
+        public async Task<IActionResult> Put(int id, [FromBody] EpisodeCreateUpdateDTO episode)
         {
-            var updated = await _repository.UpdateAsync(character);
+            var updated = await _repository.UpdateAsync(episode);
 
             if (updated)
             {
@@ -64,7 +64,7 @@ namespace BDSA2018.Lecture10.Web.Controllers
             return NotFound();
         }
 
-        // DELETE api/characters/5
+        // DELETE api/episodes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

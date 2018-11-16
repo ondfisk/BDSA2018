@@ -1,4 +1,4 @@
-﻿using BDSA2018.Lecture10.Models;
+﻿using BDSA2018.Lecture10.Services;
 using BDSA2018.Lecture10.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

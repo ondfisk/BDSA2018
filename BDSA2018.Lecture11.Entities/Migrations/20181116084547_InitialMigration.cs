@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -102,7 +102,7 @@ namespace BDSA2018.Lecture11.Entities.Migrations
                     { 4, 1, "John A. Zoidberg", "Decapod 10", "Decapodian" },
                     { 7, 1, "Hubert J. Farnsworth", "Earth", "Human" },
                     { 2, 2, "Leela Turanga", "Earth", "Mutant, Human" },
-                    { 3, 3, "Bender Bending Rodrique", "Earth", "Robot" },
+                    { 3, 3, "Bender Bending Rodriguez", "Earth", "Robot" },
                     { 5, 4, "Amy Wong", "Mars", "Human" },
                     { 6, 5, "Hermes Conrad", "Earth", "Human" }
                 });

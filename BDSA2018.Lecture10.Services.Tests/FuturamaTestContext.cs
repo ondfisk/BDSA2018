@@ -1,7 +1,7 @@
 ﻿using BDSA2018.Lecture10.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BDSA2018.Lecture10.Models.Tests
+namespace BDSA2018.Lecture10.Services.Tests
 {
     public class FuturamaTestContext : FuturamaContext
     {

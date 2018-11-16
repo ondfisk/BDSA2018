@@ -1,5 +1,5 @@
 using BDSA2018.Lecture11.Entities;
-using BDSA2018.Lecture11.Models;
+using BDSA2018.Lecture11.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +35,7 @@ namespace BDSA2018.Lecture11.Web
             services.AddScoped<IFuturamaContext, FuturamaContext>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IActorRepository, ActorRepository>();
+            services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 
             services.AddSwaggerGen(c =>
             {
