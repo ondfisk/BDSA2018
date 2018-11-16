@@ -1,4 +1,5 @@
 using BDSA2018.Lecture11.UwpApp.Models;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -36,6 +37,13 @@ namespace BDSA2018.Lecture11.UwpApp.ViewModels
             set => SetProperty(ref _userPrincipalName, value);
         }
 
+        private ObservableCollection<System.Security.Claims.Claim> _claims;
+        public ObservableCollection<System.Security.Claims.Claim> Claims
+        {
+            get => _claims;
+            set => SetProperty(ref _claims, value);
+        }
+
         public ICommand LoadCommand { get; }
 
         public MeViewModel(INavigation navigation, IGraphRepository repository)
@@ -56,12 +64,14 @@ namespace BDSA2018.Lecture11.UwpApp.ViewModels
             }
             Loading = true;
 
-            var user = await _repository.ReadAsync();
+            //var user = await _repository.ReadAsync();
 
-            Id = user.Id;
-            DisplayName = user.DisplayName;
-            MobilePhone = user.MobilePhone;
-            UserPrincipalName = user.UserPrincipalName;
+            var claims = await _repository.ReadClaimsAsync();
+
+            //Id = user.Id;
+            //DisplayName = user.DisplayName;
+            //MobilePhone = user.MobilePhone;
+            //UserPrincipalName = user.UserPrincipalName;
 
             Loading = false;
         }
