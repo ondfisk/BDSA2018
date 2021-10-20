@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futurama.Entities", "Futurama.Entities\Futurama.Entities.csproj", "{3D4153FD-2721-4AA0-AFE5-AFA0D0C6CBD9}"
 EndProject
@@ -21,11 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futurama.MobileApp.iOS", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futurama.MobileApp.UWP", "Futurama.MobileApp\Futurama.MobileApp.UWP\Futurama.MobileApp.UWP.csproj", "{181B5E8A-5054-4C6D-8935-B65217A7679F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futurama.MobileApp", "Futurama.MobileApp\Futurama.MobileApp\Futurama.MobileApp.csproj", "{037CC568-FF98-4116-8F6E-F4D5C079F153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futurama.MobileApp", "Futurama.MobileApp\Futurama.MobileApp\Futurama.MobileApp.csproj", "{037CC568-FF98-4116-8F6E-F4D5C079F153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futurama.Shared", "Futurama.Shared\Futurama.Shared.csproj", "{02F3389E-E2AA-46F1-9275-F20D91B92173}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futurama.Shared", "Futurama.Shared\Futurama.Shared.csproj", "{02F3389E-E2AA-46F1-9275-F20D91B92173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futurama.MobileApp.Tests", "Futurama.MobileApp.Tests\Futurama.MobileApp.Tests.csproj", "{CABB887E-BEE1-4E30-8F77-BAD70DE74A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futurama.MobileApp.Tests", "Futurama.MobileApp.Tests\Futurama.MobileApp.Tests.csproj", "{CABB887E-BEE1-4E30-8F77-BAD70DE74A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

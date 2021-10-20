@@ -72,7 +72,7 @@ namespace BDSA2018.Lecture11.UwpApp.ViewModels
                 AuthenticationResult authenticationResult;
                 try
                 {
-                    authenticationResult = await _publicClientApplication.AcquireTokenSilentAsync(_settings.Scopes, account);
+                    authenticationResult = await _publicClientApplication.AcquireTokenSilent(_settings.Scopes, account).ExecuteAsync();
                 }
                 catch (MsalException e)
                 {
@@ -95,7 +95,7 @@ namespace BDSA2018.Lecture11.UwpApp.ViewModels
             AuthenticationResult authenticationResult;
             try
             {
-                authenticationResult = await _publicClientApplication.AcquireTokenAsync(_settings.Scopes);
+                authenticationResult = await _publicClientApplication.AcquireTokenInteractive(_settings.Scopes).ExecuteAsync();
             }
             catch (MsalException e)
             {

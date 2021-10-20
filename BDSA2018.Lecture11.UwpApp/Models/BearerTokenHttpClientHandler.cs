@@ -28,7 +28,7 @@ namespace BDSA2018.Lecture11.UwpApp.Models
 
             var accounts = await _publicClientApplication.GetAccountsAsync();
 
-            var result = await _publicClientApplication.AcquireTokenSilentAsync(_scopes, accounts.First());
+            var result = await _publicClientApplication.AcquireTokenSilent(_scopes, accounts.First()).ExecuteAsync();
 
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
 

@@ -106,7 +106,7 @@ namespace BDSA2018.Lecture11.UwpApp
 
             var settings = new Settings();
 
-            var publicClientApplication = new PublicClientApplication(settings.ClientId, settings.Authority);
+            var publicClientApplication = PublicClientApplicationBuilder.Create(settings.ClientId).WithAuthority(settings.Authority).Build();
 
             var handler = new BearerTokenHttpClientHandler(publicClientApplication, settings);
 

@@ -33,14 +33,15 @@ namespace BDSA2018.Lecture05.App
 
         private static ISettings GetSettings()
         {
-            var builder = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-               .AddUserSecrets<Program>(); // This does not work in production...
+               .AddUserSecrets<Program>() // This does not work in production...
+               .Build();
 
             var settings = new Settings();
 
-            builder.Build().Bind(settings);
+            ConfigurationBinder.Bind(configuration, settings);
 
             return settings;
         }
